@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final Sistemas Digitales 1</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #3b007f, #1a0061);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #ffccff;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background: #32005f;
+            padding: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffccff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 0;
+            background: #ffccff;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .section {
+            padding: 5rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: #1a0061;
+        }
+
+        .section .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .animated-circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .step {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .step::after {
+            content: "\2193";
+            font-size: 2rem;
+            color: #ffccff;
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .step:last-child::after {
+            content: '';
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #32005f;
+            color: #ffccff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Proyecto Final Sistemas Digitales 1</h1>
+        <p>PAO II 2024 - 2025</p>
+    </header>
+
+    <nav>
+        <a href="#intro">Introducción</a>
+        <a href="#funciona">Cómo Funciona</a>
+        <a href="#fotos-videos">Fotos y Videos</a>
+        <a href="#creadores">Creadores del Proyecto</a>
+    </nav>
+
+    <section id="intro" class="section">
+        <div class="animated-circle" style="top: -50px; left: 20%;"></div>
+        <div class="animated-circle" style="bottom: -50px; right: 15%;"></div>
+        <div class="container">
+            <h2>Introducción</h2>
+            <p>En el contexto de control y monitoreo de condiciones ambientales en entornos de investigación científica, surge la necesidad de implementar sistemas digitales que permitan un seguimiento preciso de las variaciones de temperatura en espacios críticos como laboratorios. Para abordar este desafío, se desarrolló un sistema basado en una FPGA que emplea sensores de temperatura y lógica combinacional para calcular valores relevantes como el mayor, menor, promedio y diferencia de temperaturas.</p>
+        </div>
+    </section>
+
+    <section id="funciona" class="section">
+        <div class="container">
+            <h2>Cómo Funciona</h2>
+            <p>El sistema fue desarrollado utilizando una FPGA, que es un dispositivo lógico programable que permite implementar circuitos digitales personalizados. Su flexibilidad y capacidad para procesar señales digitales en tiempo real la hacen ideal para proyectos de monitoreo como este.</p>
+            <div class="step">
+                <h3>Decodificador 4-16:</h3>
+                <p>Recibe las señales de la botonera (4 bits) y activa una línea específica para determinar qué operación realizar (mayor, menor, promedio o diferencia).</p>
+            </div>
+            <div class="step">
+                <h3>Multiplexor:</h3>
+                <p>Selecciona cuál de los resultados calculados (mayor, menor, diferencia o promedio) será enviado a los displays, en función de la señal activa del decodificador.</p>
+            </div>
+            <div class="step">
+                <h3>Bloque Mayor:</h3>
+                <p>Determina el valor más alto entre las lecturas de los dos sensores (S1 y S2) mediante un comparador y un multiplexor interno.</p>
+            </div>
+            <div class="step">
+                <h3>Bloque Menor:</h3>
+                <p>Determina el valor más bajo entre las lecturas de los dos sensores (S1 y S2), utilizando un mecanismo similar al bloque mayor.</p>
+            </div>
+            <div class="step">
+                <h3>Bloque Diferencia:</h3>
+                <p>Calcula la diferencia absoluta entre los valores de S1 y S2, asegurando que el resultado siempre sea positivo.</p>
+            </div>
+            <div class="step">
+                <h3>Bloque Promedio:</h3>
+                <p>Suma los valores de S1 y S2, luego realiza un desplazamiento a la derecha para calcular el promedio.</p>
+            </div>
+            <div class="subsection">
+                <h3>Resultados</h3>
+                <p>El sistema fue probado exitosamente, mostrando los resultados esperados en los displays para todas las operaciones seleccionadas. A continuación, se muestra un ejemplo del waveform obtenido durante las pruebas:</p>
+                <img src="images/waveform.jpg" alt="Waveform del circuito" style="width: 80%; border-radius: 10px; margin: 1rem;">
+            </div>
+        </div>
+    </section>
+
+    <section id="fotos-videos" class="section">
+        <div class="container">
+            <h2>Fotos y Videos</h2>
+            <div>
+                <img src="images/foto1.png" alt="Foto del circuito" style="width: 80%; border-radius: 10px; margin: 1rem;">
+                <img src="images/foto2.jpg" alt="Foto del sistema en acción" style="width: 80%; border-radius: 10px; margin: 1rem;">
+            </div>
+            <p>Video del proyecto: <a href="videos/video.mp4" target="_blank" style="color: #ffccff;">Descargar Video</a></p>
+        </div>
+    </section>
+
+    <section id="creadores" class="section">
+        <div class="container">
+            <h2>Creadores del Proyecto</h2>
+            <ul>
+                <li>Kimberly Mickaela Reyes Tigrero - Diseño del sistema de monitoreo.</li>
+                <li>María Paula Chávez Barreno - Programación y pruebas del sistema.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Proyecto Final Sistemas Digitales 1 - <a href="#" style="color: #ffccff;">GitHub Repository</a></p>
+    </footer>
+</body>
+</html>
